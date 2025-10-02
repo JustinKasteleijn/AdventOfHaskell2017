@@ -52,7 +52,26 @@ testDigitFail =
       (parse digit "a")
       (Left $ 'a' : " does not match predicate")
 
+-- Test for the sat parser
+testSatParser :: Test
+testSatParser =
+  TestCase $
+    assertEqual
+      "sat parser"
+      (parse (sat (== 'a')) "abb")
+      (Right ('a', "bb"))
+
+testSatParserFail :: Test
+testSatParserFail =
+  TestCase $
+    assertEqual
+      "sat parser fail"
+      (parse (sat (== 'a')) "bb")
+      (Left $ 'b' : " does not match predicate")
+
 main :: IO ()
 main = do
-  _ <- runTestTT $ TestList [testItem, testItemFail, testChar, testCharFail, testDigit, testDigitFail]
+  _ <-
+    runTestTT $
+      TestList [testItem, testItemFail, testChar, testCharFail, testDigit, testDigitFail, testSatParser, testSatParserFail]
   return ()
