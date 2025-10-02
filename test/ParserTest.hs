@@ -1,5 +1,20 @@
+module ParserTest where
+
 import Parser
 import Test.HUnit
+
+parserTests :: Test
+parserTests =
+  TestList
+    [ testItem,
+      testItemFail,
+      testChar,
+      testCharFail,
+      testDigit,
+      testDigitFail,
+      testSatParser,
+      testSatParserFail
+    ]
 
 -- Test the item parser
 testItem :: Test
@@ -68,10 +83,3 @@ testSatParserFail =
       "sat parser fail"
       (parse (sat (== 'a')) "bb")
       (Left $ 'b' : " does not match predicate")
-
-main :: IO ()
-main = do
-  _ <-
-    runTestTT $
-      TestList [testItem, testItemFail, testChar, testCharFail, testDigit, testDigitFail, testSatParser, testSatParserFail]
-  return ()

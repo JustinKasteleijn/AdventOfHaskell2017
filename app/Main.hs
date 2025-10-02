@@ -2,4 +2,4 @@ import Parser
 
 main :: IO ()
 main = do
-  print "Hello Cabal"
+  print $ parse (sat (== 'H')) "Hello Cabal"
