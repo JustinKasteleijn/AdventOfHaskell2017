@@ -1,0 +1,10 @@
+# Cabal and Stack build artifacts
+dist-newstyle/
+.cabal-sandbox/
+.stack-work/
+
+# OS files
+.DS_Store
+
+# Editor temp files
+*.swp
