@@ -13,7 +13,7 @@ type Position = (Int, Int)
 
 parseCommands :: String -> [Command]
 parseCommands input =
-  case parse (some parseCommand) input of
+  case parse (sepBy1 parseCommand newline) input of
     Right (xs, _) -> xs
     Left err -> error err
 

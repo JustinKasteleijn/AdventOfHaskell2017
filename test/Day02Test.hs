@@ -12,11 +12,20 @@ day02Tests =
       testParseDown,
       testParseDownFail,
       testParseUp,
-      testParseUpFail
+      testParseUpFail,
+      testParseCommands
     ]
 
 input :: String
 input = "forward 5\ndown 5\nforward 8\nup 3\ndown 8\nforward 2"
+
+testParseCommands :: Test
+testParseCommands =
+  TestCase $
+    assertEqual
+      "Day 2 Test Parse Commands"
+      (parseCommands input)
+      [(Forward 5), (Down 5), (Forward 8), (Up 3), (Down 8), (Forward 2)]
 
 testParseForward :: Test
 testParseForward =
