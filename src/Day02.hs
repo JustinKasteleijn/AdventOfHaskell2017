@@ -11,6 +11,8 @@ data Command
 
 type Position = (Int, Int)
 
+type PositionWithAim = (Int, Int, Int)
+
 parseCommands :: String -> [Command]
 parseCommands input =
   case parse (sepBy1 parseCommand newline) input of
@@ -25,14 +27,25 @@ calculatePos = foldr depth' (0, 0)
     depth' (Down n) (x, y) = (x, y + n)
     depth' (Up n) (x, y) = (x, y - n)
 
+calculatePosWithAim :: [Command] -> PositionWithAim
+calculatePosWithAim = foldl (flip depth') (0, 0, 0)
+  where
+    depth' :: Command -> PositionWithAim -> PositionWithAim
+    depth' (Forward n) (x, y, a) = (x + n, y + (a * n), a)
+    depth' (Down n) (x, y, a) = (x, y, a + n)
+    depth' (Up n) (x, y, a) = (x, y, a - n)
+
 day02Part1 :: String -> Int
 day02Part1 =
   uncurry (*)
     . calculatePos
     . parseCommands
-  where
-    multiplyTuple :: (Int, Int) -> Int
-    multiplyTuple (x, y) = x * y
+
+day02Part2 :: String -> Int
+day02Part2 =
+  (\(x, y, z) -> x * y)
+    . calculatePosWithAim
+    . parseCommands
 
 parseCommand :: Parser Command
 parseCommand =

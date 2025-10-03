@@ -14,7 +14,8 @@ day02Tests =
       testParseUp,
       testParseUpFail,
       testParseCommands,
-      testPart1
+      testPart1,
+      testPart2
     ]
 
 input :: String
@@ -27,6 +28,14 @@ testPart1 =
       "Day 2 Part 1 Test"
       (day02Part1 input)
       150
+
+testPart2 :: Test
+testPart2 =
+  TestCase $
+    assertEqual
+      "Day 2 Part 1 Test"
+      (day02Part2 input)
+      900
 
 testParseCommands :: Test
 testParseCommands =
