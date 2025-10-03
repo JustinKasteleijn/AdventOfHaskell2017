@@ -1,6 +1,6 @@
 module Day04 where
 
-import Control.Applicative (Alternative (..))
+import Data.List (transpose)
 import Parser
 import Utilities
 
@@ -9,7 +9,12 @@ type BingoCard = [[(Int, Bool)]]
 type BingoNumbers = [Int]
 
 bingo :: BingoCard -> Bool
-bingo card = undefined
+bingo card =
+  let rows = (map (map snd) card)
+   in any markedRow rows || any markedRow (transpose rows)
+  where
+    markedRow :: [Bool] -> Bool
+    markedRow = all id
 
 parseBingoNumbers :: Parser BingoNumbers
 parseBingoNumbers = sepBy nat (char ',') <* newline1
