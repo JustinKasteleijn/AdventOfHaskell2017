@@ -1,5 +1,6 @@
 import Day01Test
 import Day02Test
+import Day03Test
 import ParserTest
 import Test.HUnit
 import UtilitiesTest
@@ -16,6 +17,7 @@ main = do
       utilitiesSuite = TestLabel "Utilities Test" utilitiesTests
       day01Suite = TestLabel "Day01 Tests" day01Tests
       day02Suite = TestLabel "Day02 Tests" day02Tests
+      day03Suite = TestLabel "Day03 Tests" day03Tests
       allTests = TestList [parsingSuite, day01Suite]
 
   runSuite "Parser" parsingSuite
@@ -25,3 +27,5 @@ main = do
   runSuite "Day01" day01Suite
 
   runSuite "Day02" day02Suite
+
+  runSuite "Day03" day03Suite
