@@ -18,16 +18,10 @@ main = do
       day02Suite = TestLabel "Day02 Tests" day02Tests
       allTests = TestList [parsingSuite, day01Suite]
 
-  print "Running Parser Tests:"
-  counts <- runTestTT parsingSuite
-  print counts
+  runSuite "Parser" parsingSuite
 
-  print "Running Utilities Tests:"
-  counts <- runTestTT utilitiesSuite
-  print counts
+  runSuite "Utilities" utilitiesSuite
 
-  print "Running Day01 Tests:"
-  counts <- runTestTT day01Suite
-  print counts
+  runSuite "Day01" day01Suite
 
   runSuite "Day02" day02Suite
