@@ -1,16 +1,14 @@
 module Day03 where
 
-import Data.List (transpose)
+import Data.List (partition, transpose)
 import Parser
+import Utilities
 
 day03Part1 :: String -> Int
 day03Part1 input =
   let bin = map (\(x, y) -> if x > y then '0' else '1') (parseInput input)
    in (binaryToInt bin) * (binaryToInt (flipBin bin))
   where
-    binaryToInt :: String -> Int
-    binaryToInt = foldl (\acc c -> acc * 2 + if c == '1' then 1 else 0) 0
-
     flipBin :: String -> String
     flipBin = map (\c -> if c == '0' then '1' else '0')
 
@@ -30,3 +28,27 @@ parseInput input = map (countRow') (parse' input)
       case parse (lines1 digits1) ((unlines . transpose . lines) input) of
         Right (xs, _) -> xs
         Left err -> error err
+
+day03Part2 :: String -> Int
+day03Part2 input =
+  let rows = lines input
+      oxygen = filterRating mostCommonBit 0 rows
+      co2 = filterRating leastCommonBit 0 rows
+   in binaryToInt oxygen * binaryToInt co2
+
+filterRating :: ([String] -> Int -> Char) -> Int -> [String] -> String
+filterRating _ _ [x] = x -- stop when only one left
+filterRating bitFunc pos xs =
+  let keepBit = bitFunc xs pos
+      xs' = filter (\s -> s !! pos == keepBit) xs
+   in filterRating bitFunc (pos + 1) xs'
+
+mostCommonBit :: [String] -> Int -> Char
+mostCommonBit xs pos =
+  let (zeros, ones) = partition (\s -> s !! pos == '0') xs
+   in if length ones >= length zeros then '1' else '0'
+
+leastCommonBit :: [String] -> Int -> Char
+leastCommonBit xs pos =
+  let (zeros, ones) = partition (\s -> s !! pos == '0') xs
+   in if length zeros <= length ones then '0' else '1'

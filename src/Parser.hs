@@ -137,3 +137,9 @@ sepBy px psep = sepBy1 px psep <|> pure []
 
 lines1 :: Parser a -> Parser [a]
 lines1 px = sepBy1 px newline
+
+try :: Parser a -> Parser a
+try p = Parser $ \input ->
+  case parse p input of
+    Right result -> Right result
+    Left _ -> Left ""

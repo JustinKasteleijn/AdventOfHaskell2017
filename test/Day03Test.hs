@@ -8,7 +8,8 @@ day03Tests :: Test
 day03Tests =
   TestList
     [ testParse,
-      testPart1
+      testPart1,
+      testPart2
     ]
 
 input :: String
@@ -21,6 +22,14 @@ testPart1 =
       "Day 3 Part 1 Test"
       (day03Part1 input)
       198
+
+testPart2 :: Test
+testPart2 =
+  TestCase $
+    assertEqual
+      "Day 3 Part 2 Test"
+      (day03Part2 input)
+      230
 
 testParse :: Test
 testParse =

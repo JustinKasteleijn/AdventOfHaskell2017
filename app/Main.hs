@@ -14,3 +14,4 @@ main = do
 
   inputDay3 <- readFile "inputs/day03.txt"
   print $ "Day 3 Part 1: " ++ show (day03Part1 inputDay3)
+  print $ "Day 3 Part 2: " ++ show (day03Part2 inputDay3)
