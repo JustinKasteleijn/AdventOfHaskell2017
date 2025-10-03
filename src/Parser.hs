@@ -134,3 +134,6 @@ sepBy1 px psep =
 
 sepBy :: Parser a -> Parser b -> Parser [a]
 sepBy px psep = sepBy1 px psep <|> pure []
+
+lines1 :: Parser a -> Parser [a]
+lines1 px = sepBy1 px newline

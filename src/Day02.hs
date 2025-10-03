@@ -15,7 +15,7 @@ type PositionWithAim = (Int, Int, Int)
 
 parseCommands :: String -> [Command]
 parseCommands input =
-  case parse (sepBy1 parseCommand newline) input of
+  case parse (lines1 parseCommand) input of
     Right (xs, _) -> xs
     Left err -> error err
 
