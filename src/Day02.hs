@@ -9,11 +9,30 @@ data Command
   | Up Int
   deriving (Show, Eq)
 
+type Position = (Int, Int)
+
 parseCommands :: String -> [Command]
 parseCommands input =
   case parse (some parseCommand) input of
     Right (xs, _) -> xs
     Left err -> error err
+
+calculateDepth :: [Command] -> Position
+calculateDepth = foldr depth' (0, 0)
+  where
+    depth' :: Command -> Position -> Position
+    depth' (Forward n) (x, y) = (x + n, y)
+    depth' (Down n) (x, y) = (x, y + n)
+    depth' (Up n) (x, y) = (x, y - n)
+
+part1 :: String -> Int
+part1 =
+  uncurry (*)
+    . calculateDepth
+    . parseCommands
+  where
+    multiplyTuple :: (Int, Int) -> Int
+    multiplyTuple (x, y) = x * y
 
 parseCommand :: Parser Command
 parseCommand =
