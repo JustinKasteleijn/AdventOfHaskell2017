@@ -51,7 +51,6 @@ instance Alternative Parser where
           Left msg' -> Left (msg ++ " or " ++ msg')
 
 -- Parser Functions
-
 item :: Parser Char
 item = Parser $ \input -> case input of
   (x : xs) -> Right (x, xs)

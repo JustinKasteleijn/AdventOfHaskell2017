@@ -17,18 +17,18 @@ parseCommands input =
     Right (xs, _) -> xs
     Left err -> error err
 
-calculateDepth :: [Command] -> Position
-calculateDepth = foldr depth' (0, 0)
+calculatePos :: [Command] -> Position
+calculatePos = foldr depth' (0, 0)
   where
     depth' :: Command -> Position -> Position
     depth' (Forward n) (x, y) = (x + n, y)
     depth' (Down n) (x, y) = (x, y + n)
     depth' (Up n) (x, y) = (x, y - n)
 
-part1 :: String -> Int
-part1 =
+day02Part1 :: String -> Int
+day02Part1 =
   uncurry (*)
-    . calculateDepth
+    . calculatePos
     . parseCommands
   where
     multiplyTuple :: (Int, Int) -> Int

@@ -8,3 +8,6 @@ dist-newstyle/
 
 # Editor temp files
 *.swp
+
+# Advent of code inputs
+/inputs
