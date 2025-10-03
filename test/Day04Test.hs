@@ -7,8 +7,26 @@ import Test.HUnit
 day04Tests :: Test
 day04Tests =
   TestList
-    [ testParseInput
+    [ testParseInput,
+      testPart1,
+      testPart2
     ]
+
+testPart1 :: Test
+testPart1 =
+  TestCase $
+    assertEqual
+      "Day 4 Part 1 Test"
+      (day04Part1 input)
+      (4512)
+
+testPart2 :: Test
+testPart2 =
+  TestCase $
+    assertEqual
+      "Day 4 Part 2 Test"
+      (day04Part2 input)
+      (1924)
 
 testParseInput :: Test
 testParseInput =

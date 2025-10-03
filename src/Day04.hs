@@ -1,12 +1,47 @@
 module Day04 where
 
-import Data.List (transpose)
+import Data.List (find, partition, transpose)
 import Parser
 import Utilities
 
 type BingoCard = [[(Int, Bool)]]
 
 type BingoNumbers = [Int]
+
+day04Part1 :: String -> Int
+day04Part1 input =
+  let (n, cards) = parseInput input
+   in play n cards
+
+day04Part2 :: String -> Int
+day04Part2 input =
+  let (numbers, cards) = parseInput input
+   in playLast numbers cards
+
+markNumber :: Int -> BingoCard -> BingoCard
+markNumber n = map (map (\(x, b) -> if x == n then (x, True) else (x, b)))
+
+score :: Int -> BingoCard -> Int
+score n card = n * sum [x | (x, marked) <- concat card, not marked]
+
+playLast :: BingoNumbers -> [BingoCard] -> Int
+playLast [] _ = error "No numbers left"
+playLast (n : ns) cards =
+  let markedCards = map (markNumber n) cards
+      (winners, losers) = partition bingo markedCards
+   in case (winners, losers) of
+        -- No boards left? shouldn't happen
+        (_, []) -> score n (head winners)
+        -- Some winners, but still boards left: keep playing with losers
+        _ -> playLast ns losers
+
+play :: BingoNumbers -> [BingoCard] -> Int
+play [] _ = error "No numbers left"
+play (n : ns) cards =
+  let markedCards = map (markNumber n) cards
+   in case find bingo markedCards of
+        Just winner -> score n winner
+        Nothing -> play ns markedCards
 
 bingo :: BingoCard -> Bool
 bingo card =
