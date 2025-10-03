@@ -8,7 +8,11 @@ day02Tests :: Test
 day02Tests =
   TestList
     [ testParseForward,
-      testParseForwardFail
+      testParseForwardFail,
+      testParseDown,
+      testParseDownFail,
+      testParseUp,
+      testParseUpFail
     ]
 
 input :: String
@@ -26,6 +30,38 @@ testParseForwardFail :: Test
 testParseForwardFail =
   TestCase $
     assertEqual
-      "Day 2 Test Parsing Forward"
+      "Day 2 Test Parsing Forward Fail"
       (parse parseForward "forard 2")
       (Left "Expected 'w', but got 'a'")
+
+testParseDown :: Test
+testParseDown =
+  TestCase $
+    assertEqual
+      "Day 2 Test Parsing Down"
+      (parse parseDown "down 4")
+      (Right (Down 4, ""))
+
+testParseDownFail :: Test
+testParseDownFail =
+  TestCase $
+    assertEqual
+      "Day 2 Test Parsing Down Fail"
+      (parse parseDown "dow 2")
+      (Left "Expected 'n', but got ' '")
+
+testParseUp :: Test
+testParseUp =
+  TestCase $
+    assertEqual
+      "Day 2 Test Parsing Up"
+      (parse parseUp "up 10")
+      (Right (Up 10, ""))
+
+testParseUpFail :: Test
+testParseUpFail =
+  TestCase $
+    assertEqual
+      "Day 2 Test Parsing Up Fail"
+      (parse parseUp "pu 2")
+      (Left "Expected 'u', but got 'p'")
