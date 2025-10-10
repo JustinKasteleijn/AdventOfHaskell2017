@@ -7,13 +7,13 @@ import Utilities
 day03Part1 :: String -> Int
 day03Part1 input =
   let bin = map (\(x, y) -> if x > y then '0' else '1') (parseInput input)
-   in (binaryToInt bin) * (binaryToInt (flipBin bin))
+   in binaryToInt bin * binaryToInt (flipBin bin)
   where
     flipBin :: String -> String
     flipBin = map (\c -> if c == '0' then '1' else '0')
 
 parseInput :: String -> [(Int, Int)]
-parseInput input = map (countRow') (parse' input)
+parseInput input = map countRow' (parse' input)
   where
     countRow' :: String -> (Int, Int)
     countRow' = foldr count' (0, 0)
@@ -37,7 +37,7 @@ day03Part2 input =
    in binaryToInt oxygen * binaryToInt co2
 
 filterRating :: ([String] -> Int -> Char) -> Int -> [String] -> String
-filterRating _ _ [x] = x -- stop when only one left
+filterRating _ _ [x] = x
 filterRating bitFunc pos xs =
   let keepBit = bitFunc xs pos
       xs' = filter (\s -> s !! pos == keepBit) xs
