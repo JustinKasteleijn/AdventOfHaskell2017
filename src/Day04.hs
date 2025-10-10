@@ -45,7 +45,7 @@ play (n : ns) cards =
 
 bingo :: BingoCard -> Bool
 bingo card =
-  let rows = (map (map snd) card)
+  let rows = map (map snd) card
    in any markedRow rows || any markedRow (transpose rows)
   where
     markedRow :: [Bool] -> Bool
@@ -71,7 +71,7 @@ parseInput input =
 
       cards =
         map
-          (fst . (unpackParser parseBingoCard))
+          (fst . unpackParser parseBingoCard)
           (splitOn "\n\n" rest1)
    in (numbers, cards)
   where
