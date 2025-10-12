@@ -30,9 +30,7 @@ playLast (n : ns) cards =
   let markedCards = map (markNumber n) cards
       (winners, losers) = partition bingo markedCards
    in case (winners, losers) of
-        -- No boards left? shouldn't happen
         (_, []) -> score n (head winners)
-        -- Some winners, but still boards left: keep playing with losers
         _ -> playLast ns losers
 
 play :: BingoNumbers -> [BingoCard] -> Int
@@ -49,7 +47,7 @@ bingo card =
    in any markedRow rows || any markedRow (transpose rows)
   where
     markedRow :: [Bool] -> Bool
-    markedRow = all id
+    markedRow = and
 
 parseBingoNumbers :: Parser BingoNumbers
 parseBingoNumbers = sepBy nat (char ',') <* newline1
